@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <math.h>
-#include "../comparatorList.h"
+#include "../utils/comparatorList.h"
 
 int numOfImputs(FILE *inFile)
 {

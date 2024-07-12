@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "sort.h"
-#include "arrayUtils.h"
+#include "../utils/arrayUtils.h"
 
 // random arrays checks
 int main()
