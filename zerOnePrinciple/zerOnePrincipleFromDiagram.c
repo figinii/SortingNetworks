@@ -130,9 +130,14 @@ bool zerOnePrinciple(comparatorList *head, int inputLen)
     return true;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-    FILE *inFile = fopen("oddEvenMerge.txt", "r");
+    if(argc != 2){
+        printf("Usage: %s <input file>\n", argv[0]);
+        exit(1);
+    }
+
+    FILE *inFile = fopen(argv[1], "r");
     if (inFile == NULL)
     {
         printf("Error opening file\n");
