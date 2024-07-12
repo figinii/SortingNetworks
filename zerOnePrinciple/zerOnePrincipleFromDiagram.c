@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <math.h>
 #include "../utils/comparatorList.h"
+#include "../utils/arrayUtils.h"
 
 int numOfImputs(FILE *inFile)
 {
@@ -63,37 +64,6 @@ comparatorList *sortingNetworkComparatorList(FILE *inFile)
     return head;
 }
 
-void reset(int *rep, int inputLen)
-{
-    for (int i = 0; i < inputLen; i++)
-    {
-        rep[i] = 0;
-    }
-}
-
-int *bitwiseRep(int *rep, int inputLen, int num)
-{
-    reset(rep, inputLen);
-    for (int i = 0; i < inputLen; i++)
-    {
-        rep[i] = num & 1;
-        num >>= 1;
-    }
-    return rep;
-}
-
-bool checkIfSorted(int *input, int inputLen)
-{
-    for (int i = 0; i < inputLen - 1; i++)
-    {
-        if (input[i] < input[i + 1])
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
 void compare(int *a, int *b)
 {
     if (*a < *b)
@@ -103,13 +73,6 @@ void compare(int *a, int *b)
         *b = temp;
     }
 }
-
-/* void printArray(int* arr, int size){
-    for(int i=0; i<size; i++){
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-} */
 
 bool zerOnePrinciple(comparatorList *head, int inputLen)
 {
@@ -121,7 +84,6 @@ bool zerOnePrinciple(comparatorList *head, int inputLen)
         {
             compare(&input[current->comparator->firstIndex], &input[current->comparator->secondIndex]);
         }
-        //        printArray(input, inputLen);
         if (!checkIfSorted(input, inputLen))
         {
             return false;

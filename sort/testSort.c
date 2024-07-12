@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include "sort.h"
 #include "../utils/arrayUtils.h"
+#define Dlong long long
 
 // random arrays checks
 int main()
 {
-  int32 length;
+  Dlong length;
   int32* arr = generate_random_array(1000, &length);
   int32* backUp =  copyArray(arr, length);
 

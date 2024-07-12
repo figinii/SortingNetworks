@@ -2,12 +2,12 @@
 #include "compare.h"
 #include "sort.h"
 
-void bubbleSort(int32 *a, int dim);
+void bubbleSort(int32 *a, Dlong dim);
 
 void oddEvenSort(int32 *arr, Dlong dim);
 
 
-void bubbleSort(int32 *a, int dim)
+void bubbleSort(int32 *a, Dlong dim)
 {
 
     for (int32 i = 0; i < dim - 1; i++)
