@@ -1,6 +1,8 @@
 #include <string.h>
-#include <stdbool.h>
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include "../utils/comparatorList.h"
 #include "../utils/arrayUtils.h"
 
@@ -89,6 +91,7 @@ bool zerOnePrinciple(comparatorList *head, int inputLen)
             return false;
         }
     }
+    free(input);
     return true;
 }
 
