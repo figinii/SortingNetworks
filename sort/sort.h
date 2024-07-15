@@ -9,6 +9,6 @@
 
 void bubbleSort(int32 *a, Dlong dim);
 
-void oddEvenSort(int32 *arr, Dlong dim);
+void mergExchange(int32 *arr, Dlong dim);
 
 #endif

@@ -36,7 +36,7 @@ int main()
   	arr = backUp;
   	backUp = copyArray(arr, length);
 
-  	oddEvenSort(arr, length);
+  	mergExchange(arr, length);
   	printArray(arr, length);
 
   	int32* arr2 = copyArray(arr, length);
