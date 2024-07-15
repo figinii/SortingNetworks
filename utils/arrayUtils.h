@@ -11,7 +11,7 @@
 #define int32 int32_t
 
 void printArray(int32 arr[], Dlong size);
-int32* generate_random_array(Dlong max_length, Dlong *size);
+int32* generate_random_array(Dlong max_length, Dlong *size, bool randomSize); 
 int32* copyArray(int32* arr, Dlong size);
 void freeArray(int32* arr);
 bool areEqual(int32* arr1, int32* arr2, Dlong size);

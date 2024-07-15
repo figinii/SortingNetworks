@@ -1,7 +1,7 @@
 #include "arrayUtils.h"
 
 void printArray(int32 arr[], Dlong size);
-int32* generate_random_array(Dlong max_length, Dlong *size);
+int32* generate_random_array(Dlong max_length, Dlong *size, bool randomSize);
 int32* copyArray(int32* arr, Dlong size);
 void freeArray(int32* arr);
 bool areEqual(int32* arr1, int32* arr2, Dlong size);
@@ -22,19 +22,22 @@ int32* copyArray(int32* arr, Dlong size){
     return copy;
 }
 
-int32* generate_random_array(Dlong max_length, Dlong *size) 
+int32* generate_random_array(Dlong max_length, Dlong *size, bool randomSize) 
 {
     srand(time(NULL));
     
-    *size = rand() % max_length;
+    if(randomSize){
+        *size = rand() % max_length;
+    }else{
+        *size = max_length;
+    }
     
     int *array = (int *)malloc(*size * sizeof(int));
     if (array == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
+        fprintf(stderr, "Memory asizellocation failed\n");
         exit(EXIT_FAILURE);
     }
     
-    printf("%d\n", *size);
     // Populate the array with random values
     for (int i = 0; i < *size; i++) {
         array[i] = rand();
