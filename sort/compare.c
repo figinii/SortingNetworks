@@ -3,7 +3,7 @@
 
 int32 greater(int32 a, int32 b);
 void swap(int32 *a, int32 *b, int32 swap);
-void compare(int32 *a, int32 *b);
+void compare(int32 firstIndex, int32 secondIndex, int32* arr);
 
 // check if b > a
 // return 0 (0x0000) if a > b, -1 (0xFFFF) otherwise
@@ -25,9 +25,9 @@ void swap(int32 *a, int32 *b, int32 swap)
 }
 
 // compare a and b, swap them if b > a
-void compare(int32 *a, int32 *b)
+void compare(int32 firstIndex, int32 secondIndex, int32* arr)
 {
-    swap(a, b, greater(*a, *b));
+    swap(&arr[firstIndex], &arr[secondIndex], greater(arr[firstIndex], arr[secondIndex]));
 }
 
 // int main()

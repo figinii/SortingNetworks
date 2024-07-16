@@ -12,7 +12,7 @@ bool zerOnePrincipleCheckSort(Dlong size){
     for (Dlong i = 0; i < pow(2, size); i++)
     {
         bitwiseRep(input, size, i);
-        mergExchange(input, size);
+        mergExchange(input, size, NULL);
         if (!checkIfSorted(input, size))
         {
             free(input);

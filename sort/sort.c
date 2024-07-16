@@ -3,8 +3,7 @@
 #include "sort.h"
 
 void bubbleSort(int32 *a, Dlong dim);
-
-void mergExchange(int32 *arr, Dlong dim);
+void mergExchange(int32 *arr, Dlong dim, comparator comparator);
 
 
 void bubbleSort(int32 *a, Dlong dim)
@@ -14,15 +13,19 @@ void bubbleSort(int32 *a, Dlong dim)
     {
         for (int32 j = 0; j < dim - i - 1; j++)
         {
-            compare(&a[j], &a[j + 1]);
+            compare(j, j+1, a);
         }
     }
 }
 
-void mergExchange(int32 *arr, Dlong dim)
+void mergExchange(int32 *arr, Dlong dim, comparator comparator)
 {
     Dlong p, q, r, d, i;
     int firsTime;
+
+
+    if(comparator == NULL)
+        comparator = compare;
 
     Dlong top = 1;
     while (top < dim - top) top += top;
@@ -42,12 +45,11 @@ void mergExchange(int32 *arr, Dlong dim)
             for(i = 0; i < dim - d; i++){
                 if((i & p) == r)
                 {
-                    compare(&arr[i], &arr[i + d]);
+                    comparator(i, (i+d), arr);
                 }
             }
             firsTime = 0;
         }while(q != p);
-
         
     }
 

@@ -36,7 +36,7 @@ int main()
   	arr = backUp;
   	backUp = copyArray(arr, length);
 
-  	mergExchange(arr, length);
+  	mergExchange(arr, length, NULL);
   	printArray(arr, length);
 
   	int32* arr2 = copyArray(arr, length);
