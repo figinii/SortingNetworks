@@ -1,5 +1,6 @@
 #include "compare.h"
 #include <stdio.h>
+#include "saveComparation.h"
 
 int32 greater(int32 a, int32 b);
 void swap(int32 *a, int32 *b, int32 swap);
@@ -29,6 +30,12 @@ void compare(int32 firstIndex, int32 secondIndex, int32* arr)
 {
     swap(&arr[firstIndex], &arr[secondIndex], greater(arr[firstIndex], arr[secondIndex]));
 }
+
+/*
+fare il compare che stampa su file
+fare il makefile per compilare tutto
+fare il print della sorting network con py
+*/
 
 // int main()
 // {

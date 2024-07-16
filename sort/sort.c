@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "compare.h"
+#include "./comparator/compare.h"
 #include "sort.h"
 
 void bubbleSort(int32 *a, Dlong dim);
