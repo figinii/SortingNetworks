@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include "sort.h"
+#include "../sort/sort.h"
 #include "../utils/arrayUtils.h"
 #define Dlong long long
 
