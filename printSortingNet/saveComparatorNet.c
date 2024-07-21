@@ -9,8 +9,13 @@ int main(int argc, char *argv[])
     Dlong length;
 	int32* arr;
 	
-	printf("input Length? ");
-  	scanf("%lld", &length);
+	if(argc < 2)
+	{
+		printf("Usage: %s <length>\n", argv[0]);
+		return 1;
+	}
+
+	length = atoll(argv[1]);
 	
     arr = generate_random_array(length, &length, false);
   	
