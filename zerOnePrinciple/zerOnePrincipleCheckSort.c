@@ -4,7 +4,7 @@
 #include "../utils/arrayUtils.h"
 #include "../sort/sort.h"
 
-#define Dlong long long
+#define Dlong int64_t
 #define int32 int32_t
 
 bool zerOnePrincipleCheckSort(Dlong size){

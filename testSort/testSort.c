@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include "../sort/sort.h"
 #include "../utils/arrayUtils.h"
-#define Dlong long long
+#define Dlong int64_t
 
 // random arrays checks
 int main()

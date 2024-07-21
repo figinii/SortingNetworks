@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 
-#define Dlong long long
+#define Dlong int64_t
 #define int32 int32_t
 typedef void (*comparator)(int32, int32, int32*);
 

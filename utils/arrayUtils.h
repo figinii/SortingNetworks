@@ -7,7 +7,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define Dlong long long
+#define Dlong int64_t
 #define int32 int32_t
 
 void printArray(int32 arr[], Dlong size);
