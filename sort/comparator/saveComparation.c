@@ -2,11 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "saveComparation.h"
 
-#define FILE_NAME_LEN 100
-#define PATH_LEN FILE_NAME_LEN + 20
-
-#define PATH "./comparatorLists/"
+#define PATH "./comparatorPrints/"
 #define FILE_NAME "comparatorList_"
 
 void getCompleteFileName(char* fileName)
@@ -22,6 +20,7 @@ void getCompleteFileName(char* fileName)
 void printComparationToFile(int32 firstIndex, int32 secondIndex){
 
     char fileName[FILE_NAME_LEN];
+    fileName[0] = '\0';
     getCompleteFileName(fileName);
     
     char filePath[PATH_LEN] = PATH;
@@ -34,13 +33,14 @@ void printComparationToFile(int32 firstIndex, int32 secondIndex){
     }
 
     fprintf(f, "%d %d\n", firstIndex, secondIndex);
+    fclose(f);
 }
 
-int main(){
-    int32 a = 1;
-    int32 b = 2;
+// int main(){
+//     int32 a = 1;
+//     int32 b = 2;
 
-    printComparationToFile(a, b);
+//     printComparationToFile(a, b);
 
-    return 0;
-}
+//     return 0;
+// }

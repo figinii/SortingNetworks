@@ -8,4 +8,4 @@ mkdir:
 	mkdir -p $(OUTDIR)
 
 clean:
-	rm -f $(OUT)
+	rm -f $(OUT_SORT_TEST)
