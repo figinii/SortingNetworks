@@ -2,6 +2,7 @@
 #define SORT_H
 
 #include <stdint.h>
+#include <stddef.h>
 
 
 #define Dlong int64_t

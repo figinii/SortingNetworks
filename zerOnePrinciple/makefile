@@ -1,9 +1,10 @@
 TARGETS = zerOnePrincipleFromDiagram zerOnePrincipleCheckSort
-all: $(TARGETS)
 
 OUTDIR = ./bin/
 OUT_DIAGRAM = $(OUTDIR)zerOnePrincipleDiagram
 OUT_CHECK_SORT = $(OUTDIR)zerOnePrincipleCheckSort
+
+all: $(TARGETS)
 
 zerOnePrincipleFromDiagram: mkdir cleanFromDiagram
 	gcc zerOnePrincipleFromDiagram.c ../utils/comparatorList.c ../utils/arrayUtils.c -lm -o $(OUT_DIAGRAM)

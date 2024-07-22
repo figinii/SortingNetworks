@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "./comparator/compare.h"
 #include "sort.h"
 
