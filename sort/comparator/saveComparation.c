@@ -17,7 +17,7 @@ void getCompleteFileName(char* fileName)
     strcat(fileName, ".txt");  
 }
 
-void printComparationToFile(int32 firstIndex, int32 secondIndex){
+void printComparationToFile(int32 firstIndex, int32 secondIndex, bool swap){
 
     char fileName[FILE_NAME_LEN];
     fileName[0] = '\0';
@@ -32,7 +32,7 @@ void printComparationToFile(int32 firstIndex, int32 secondIndex){
         exit(1);
     }
 
-    fprintf(f, "%d %d\n", firstIndex, secondIndex);
+    fprintf(f, "%d %d %d\n", firstIndex, secondIndex, swap ? 1 : 0);
     fclose(f);
 }
 

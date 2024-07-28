@@ -34,8 +34,11 @@ void compare(int32 firstIndex, int32 secondIndex, int32* arr)
 
 void compareAndSave(int32 firstIndex, int32 secondIndex, int32* arr)
 {
-    printComparationToFile(firstIndex, secondIndex);
+    int32 save = arr[firstIndex];
     compare(firstIndex, secondIndex, arr);
+    bool swap = save != arr[firstIndex];
+    printComparationToFile(firstIndex, secondIndex, swap);
+    
 }
 
 /*
