@@ -26,7 +26,7 @@ comparatorList *createNode(comparator *comparator)
 
     newNode->comparator = comparator;
     newNode->next = NULL;
-
+    newNode->prev = NULL;
     return newNode;
 }
 
