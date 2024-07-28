@@ -18,7 +18,7 @@ def getComparatorList():
     with open(file, 'r') as file:
         for line in file:
             parts = line.strip().split()
-            if len(parts) == 2: 
+            if len(parts) == 3: 
                 a, b = int(parts[0]), int(parts[1])
                 numOfInput = max(numOfInput, a, b)
                 comparatorList.append((a, b))
