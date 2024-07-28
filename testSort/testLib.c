@@ -4,7 +4,6 @@
 #include "../utils/arrayUtils.h"
 #define Dlong int64_t
 
-// random arrays checks
 int main()
 {
   	Dlong length;
