@@ -1,12 +1,13 @@
 #include "comparatorList.h"
 
-comparator *createComparator();
-comparatorList *createNode(comparator *comparator);
+comparatorStruct *createComparator();
+comparatorList *createNode(comparatorStruct *comparator);
 void freeList(comparatorList *head);
+comparatorList *buildComparatorListFromFile(FILE *file);
 
-comparator *createComparator()
+comparatorStruct *createComparator()
 {
-    comparator *newComparator = (comparator *)malloc(sizeof(comparator));
+    comparatorStruct *newComparator = (comparatorStruct *)malloc(sizeof(comparatorStruct));
     if (!newComparator)
     {
         printf("Memory allocation error\n");
@@ -15,7 +16,7 @@ comparator *createComparator()
     return newComparator;
 }
 
-comparatorList *createNode(comparator *comparator)
+comparatorList *createNode(comparatorStruct *comparator)
 {
     comparatorList *newNode = (comparatorList *)malloc(sizeof(comparatorList));
     if (!newNode)
@@ -42,3 +43,27 @@ void freeList(comparatorList *head)
     }
 }
 
+comparatorList *buildComparatorListFromFile(FILE *file){
+    char buffer[100];
+    comparatorList *head = NULL;
+    comparatorList *last = NULL;
+
+    while (fgets(buffer, sizeof(buffer), file) != NULL) {
+        
+        comparatorStruct *newComparator = createComparator();
+        newComparator->firstIndex = atoi(strtok(buffer, " "));
+        newComparator->secondIndex = atoi(strtok(NULL, " "));
+        newComparator->swap = atoi(strtok(NULL, " ")) == 1;
+
+        comparatorList *newNode = createNode(newComparator);
+        if(head == NULL){
+            head = newNode;
+            last = newNode;
+        } else {
+            last->next = newNode;
+            newNode->prev = last;
+            last = newNode;
+        }
+    }
+    return head;
+}

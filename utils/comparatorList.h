@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 #define COMPARATOR_ID '*'
 
@@ -12,19 +13,19 @@ typedef struct
     int firstIndex;
     int secondIndex;
     bool swap;
-} comparator;
+} comparatorStruct;
 
 typedef struct comparatorList
 {
-    comparator *comparator;
+    comparatorStruct *comparator;
     struct comparatorList *next;
     struct comparatorList *prev;
 } comparatorList;
 
-comparatorList *createNode(comparator *comparator);
 
+comparatorList *createNode(comparatorStruct *comparator);
 void freeList(comparatorList *head);
-
-comparator *createComparator();
+comparatorStruct *createComparator();
+comparatorList *buildComparatorListFromFile(FILE *file);
 
 #endif
