@@ -4,8 +4,7 @@
 #include <string.h>
 #include "saveComparation.h"
 
-#define PATH "./comparatorPrints/"
-#define FILE_NAME "comparatorList_"
+
 
 void getCompleteFileName(char* fileName)
 {
