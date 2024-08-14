@@ -23,12 +23,11 @@ FILE* openFirstFileInDir(char* dirPath, char* fOpenMode)
     newestFilePath.filePath = NULL;
     newestFilePath.timestamp = 0;
 
-    char* fullPath = malloc(MAX_FILE_PATH_LEN * sizeof(char));
     struct stat fileStat;
-
     while((entry = readdir(dirPointer)) != NULL){
         if(entry->d_type == DT_REG)
         {   
+            char* fullPath = malloc(MAX_FILE_PATH_LEN * sizeof(char));
             snprintf(fullPath, MAX_FILE_PATH_LEN, "%s%s", dirPath, entry->d_name);
 
             if(stat(fullPath, &fileStat) == -1){
@@ -36,9 +35,10 @@ FILE* openFirstFileInDir(char* dirPath, char* fOpenMode)
                 return NULL;
             }
 
-            if(fileStat.st_mtime > newestFilePath.timestamp)
+            if(fileStat.st_mtime >= newestFilePath.timestamp)
             {
                 newestFilePath.timestamp = fileStat.st_mtime;
+                free(newestFilePath.filePath);
                 newestFilePath.filePath = fullPath;
             }
         }
@@ -48,6 +48,7 @@ FILE* openFirstFileInDir(char* dirPath, char* fOpenMode)
     free(entry);
 
     FILE *newestFile = fopen(newestFilePath.filePath, fOpenMode);
+
     free(newestFilePath.filePath);
     return newestFile;
 }
