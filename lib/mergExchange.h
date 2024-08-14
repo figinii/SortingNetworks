@@ -6,7 +6,8 @@
 #define Dlong int64_t
 #define int32 int32_t
 
-static inline void compare(int32 *first, int32 *second)
+static inline 
+void compare(int32 *first, int32 *second)
 {
     int32 diff = *first - *second;
     int32 diffSign = diff >> 31;

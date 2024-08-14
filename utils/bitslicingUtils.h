@@ -1,7 +1,7 @@
 /**
- *
+ * code adapted from
  * Optimized ISO-C11 Implementation of LEDAcrypt using GCC built-ins.
- *
+ * https://github.com/LEDAcrypt/LEDAcrypt/blob/master/Optimized_Implementation/Common/ninclude/bitslicing_helpers.h
  * @version 3.0 (May 2020)
  *
  * In alphabetical order:
@@ -16,76 +16,14 @@
 
 #pragma once
 
-#if (defined HIGH_PERFORMANCE_X86_64)
+#include <stdint.h>
+#include <immintrin.h>
 
-#define BITSLICED_OPERAND_WIDTH (BITS_TO_REPRESENT(V)+1)
+#define int32 int32_t
 #define SLICE_TYPE __m256i
-#define NUM_BITS_IN_BITSLICED_OP (256)
-#define NUM_SLICES_GF2X_ELEMENT ( (NUM_DIGITS_GF2X_ELEMENT+3)/ \
-                                  (NUM_BITS_IN_BITSLICED_OP/DIGIT_SIZE_b) )
+#define BITSLICED_OPERAND_WIDTH 32 
 
 /*bitsliced operand*/
-typedef struct {
-   SLICE_TYPE slice[BITSLICED_OPERAND_WIDTH];
-} bs_operand_t;
-
-
-static inline
-void bitslice_half_adder(SLICE_TYPE  addend_a,
-                         SLICE_TYPE  addend_b,
-                         SLICE_TYPE *result,
-                         SLICE_TYPE *carry_out)
-{
-   _mm256_storeu_si256 (result, _mm256_xor_si256(addend_a, addend_b));
-   _mm256_storeu_si256 (carry_out, _mm256_and_si256(addend_a, addend_b));
-   return;
-}
-
-static inline
-bs_operand_t bitslice_inc(bs_operand_t a, SLICE_TYPE b)
-{
-   bs_operand_t result;
-   SLICE_TYPE carry;
-   bitslice_half_adder(a.slice[0],b,&(result.slice[0]),&carry);
-   for(int i = 1; i<BITSLICED_OPERAND_WIDTH; i++) {
-      bitslice_half_adder(a.slice[i],
-                          carry,
-                          &(result.slice[i]),
-                          &carry);
-   }
-   return result;
-}
-
-static inline
-bs_operand_t slice_constant(uint16_t constant)
-{
-   bs_operand_t result;
-   __m256i one = _mm256_set_epi64x(0xFFFFFFFFFFFFFFFF,
-                                   0xFFFFFFFFFFFFFFFF,
-                                   0xFFFFFFFFFFFFFFFF,
-                                   0xFFFFFFFFFFFFFFFF);
-   __m256i zero = _mm256_set_epi64x(0,0,0,0);
-   for(int bit = 0; bit < BITSLICED_OPERAND_WIDTH; bit++) {
-      if ((constant & 1) == 1) {
-         result.slice[bit] = one;
-      } else {
-         result.slice[bit] = zero;
-      }
-      constant >>=1;
-   }
-   return result;
-}
-
-#else
-
-#define BITSLICED_OPERAND_WIDTH (BITS_TO_REPRESENT(V)+1)
-#define NUM_BITS_IN_BITSLICED_OP (DIGIT_SIZE_b)
-#define SLICE_TYPE DIGIT
-#define NUM_SLICES_GF2X_ELEMENT ( NUM_DIGITS_GF2X_ELEMENT/  \
-                                 (NUM_BITS_IN_BITSLICED_OP/DIGIT_SIZE_b) )
-
-/*bitsliced operand, slice zero is the LSB, slice BITSLICED_OPERAND_WIDTH is
- the MSB */
 typedef struct {
    SLICE_TYPE slice[BITSLICED_OPERAND_WIDTH];
 } bs_operand_t;
@@ -117,7 +55,7 @@ bs_operand_t bitslice_inc(bs_operand_t a, SLICE_TYPE b)
 }
 
 static inline
-bs_operand_t slice_constant(int16_t constant)
+bs_operand_t slice_constant(int32 constant)
 {
    bs_operand_t result;
    for(int bit = 0; bit < BITSLICED_OPERAND_WIDTH; bit++) {
@@ -126,5 +64,3 @@ bs_operand_t slice_constant(int16_t constant)
    }
    return result;
 }
-
-#endif
