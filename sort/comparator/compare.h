@@ -1,6 +1,8 @@
 #ifndef COMPARE_H
 #define COMPARE_H
 
+#pragma once
+
 #include <stdint.h>
 #include <stdbool.h>
 

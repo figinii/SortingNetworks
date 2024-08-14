@@ -5,6 +5,8 @@
 #include <stdbool.h>
 #include "../../utils/configs.h"
 
+#pragma once
+
 #define int32 int32_t
 
 #define FILE_NAME_LEN 100

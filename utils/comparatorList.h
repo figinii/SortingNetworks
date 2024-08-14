@@ -1,6 +1,8 @@
 #ifndef COMPARE_LIST_H
 #define COMPARE_LIST_H
 
+#pragma once
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>

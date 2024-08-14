@@ -1,6 +1,8 @@
 #ifndef ARRAY_UTILS_H
 #define ARRAY_UTILS_H
 
+#pragma once
+
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>

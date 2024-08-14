@@ -4,4 +4,6 @@
 #include <sys/stat.h>
 #include <time.h>
 
+#pragma once
+
 FILE* openFirstFileInDir(char* dirPath, char* fOpenMode);
