@@ -64,3 +64,13 @@ bs_operand_t slice_constant(int32 constant)
    }
    return result;
 }
+
+static inline
+void addSlice(int32 constant, bs_operand_t *storage)
+{
+   for(int bit = 0; bit < BITSLICED_OPERAND_WIDTH; bit++) {
+      storage->slice[bit] <<= 1;
+      storage->slice[bit] += (constant & 1);
+      constant >>= 1;
+   }
+}
