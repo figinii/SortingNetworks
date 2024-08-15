@@ -2,6 +2,7 @@
  * code adapted from
  * Optimized ISO-C11 Implementation of LEDAcrypt using GCC built-ins.
  * https://github.com/LEDAcrypt/LEDAcrypt/blob/master/Optimized_Implementation/Common/ninclude/bitslicing_helpers.h
+ * 
  * @version 3.0 (May 2020)
  *
  * In alphabetical order:
@@ -17,10 +18,9 @@
 #pragma once
 
 #include <stdint.h>
-#include <immintrin.h>
 
 #define int32 int32_t
-#define SLICE_TYPE __m256i
+#define SLICE_TYPE int32_t
 #define BITSLICED_OPERAND_WIDTH 32 
 
 /*bitsliced operand*/
@@ -59,7 +59,7 @@ bs_operand_t slice_constant(int32 constant)
 {
    bs_operand_t result;
    for(int bit = 0; bit < BITSLICED_OPERAND_WIDTH; bit++) {
-      result.slice[bit] = (SLICE_TYPE)0 - (constant & 1);
+      result.slice[bit] = (constant & 1);
       constant >>=1;
    }
    return result;
