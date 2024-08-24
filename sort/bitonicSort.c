@@ -16,8 +16,9 @@
 
 #include <stdio.h>
 #include <stdint.h>
-#define TYPE_LEN 64
+#define WORD_LEN 64
 #define WORD_TYPE uint64_t
+#define ARR_LEN_TYPE long long 
 
 #define ODD 0x5555555555555555
 #define PAIR 0x3333333333333333
@@ -38,44 +39,62 @@ void rose(WORD_TYPE* num, int wordDim, int blockDim);
 
 void wordBitonicSort(WORD_TYPE* word, int wordDim);
 
+void brownArr(WORD_TYPE* arr, ARR_LEN_TYPE arrLen, int wordDim, ARR_LEN_TYPE blockDim);
+void roseArr(WORD_TYPE* arr, ARR_LEN_TYPE arrLen, int wordDim, ARR_LEN_TYPE blockDim);
+void arrBitonicSort(WORD_TYPE* arr, ARR_LEN_TYPE arrLenInBit, int wordDim);
+
 int main()
 {
     // WORD_TYPE num1 = 1245;
     // WORD_TYPE num2 = 1345;
 
-    // printBitsWord(num1, TYPE_LEN);
-    // printBitsWord(num2, TYPE_LEN);
+    // printBitsWord(num1, WORD_LEN);
+    // printBitsWord(num2, WORD_LEN);
 
     // compareAndSwapWord(&num1, &num2);
-    // printBitsWord(num1, TYPE_LEN);
-    // printBitsWord(num2, TYPE_LEN);
+    // printBitsWord(num1, WORD_LEN);
+    // printBitsWord(num2, WORD_LEN);
 
     // compareAndSwapWord(&num1, &num2);
 
-    // printBitsWord(num1, TYPE_LEN);
-    // printBitsWord(num2, TYPE_LEN);
-    // printBitsWord(num1, TYPE_LEN);
-    // printBitsWord(num2, TYPE_LEN);
+    // printBitsWord(num1, WORD_LEN);
+    // printBitsWord(num2, WORD_LEN);
+    // printBitsWord(num1, WORD_LEN);
+    // printBitsWord(num2, WORD_LEN);
 
-    WORD_TYPE num3 = 91;
-    printBitsWord(num3, TYPE_LEN);
-    wordBitonicSort(&num3, TYPE_LEN);
-    printBitsWord(num3, TYPE_LEN); 
+    WORD_TYPE num3 = 38529352965235246;
+    ARR_LEN_TYPE arrLen = 16;
+    WORD_TYPE arr[arrLen];
+
+    for(int i=0; i<arrLen; i++)
+        arr[i] = num3;
+
+    for(int i=arrLen-1; i>=0; i--){
+        printf("%X", arr[i]);
+    }
+    printf("\n");
+
+    arrBitonicSort(arr, arrLen * WORD_LEN, WORD_LEN);
+    
+    for(int i=arrLen-1; i>=0; i--){
+        printf("%X", arr[i]);
+    }
+    printf("\n");
+
 
 }
 
 
 void printBitsWord(WORD_TYPE num, int dim)
 {
-    for(int i=TYPE_LEN-1; i>=0; i--)
+    for(int i=WORD_LEN-1; i>=0; i--)
     {
         int tmp = (num>>i) &1;
         printf("%d", tmp);
     }
-    printf("\n");
 }
 
-void compareAndSwapWord(WORD_TYPE* word1, WORD_TYPE* word2 /** order acending/descending */)
+void compareAndSwapWord(WORD_TYPE* word1, WORD_TYPE* word2)
 {
     WORD_TYPE tmp = *word1 & *word2;
     
@@ -115,11 +134,13 @@ void rose(WORD_TYPE* num, int wordDim, int blockDim)
     *num = lowerMask | upperMask;   
 }
 
+//da eliminare - inutilizzata
 WORD_TYPE contiguosBit2power(int exp)
 {
-    return exp!=TYPE_LEN? ((WORD_TYPE)1<<exp) -1 : -1;
+    return exp!=WORD_LEN? ((WORD_TYPE)1<<exp) -1 : -1;
 }
 
+//rendere array una define
 WORD_TYPE wordReverse(WORD_TYPE word, int stopAfter)
 {
     WORD_TYPE maskArr[] = {ODD, PAIR, NIBBLE, BYTE, SHORT, HALF_WORD};
@@ -134,20 +155,21 @@ WORD_TYPE wordReverse(WORD_TYPE word, int stopAfter)
     return result;
 }
 
-/** instead of generating use a map */
+//as input the power of 2 to use
 WORD_TYPE alternated01(int blockLen, int wordDim)
 {
-    int oddEvenLen = 2*blockLen;
-    WORD_TYPE bitBlock = contiguosBit2power(blockLen);
-    WORD_TYPE maskOnWord = bitBlock;
+    WORD_TYPE maskArr[] = {ODD, PAIR, NIBBLE, BYTE, SHORT, HALF_WORD};
 
-    for(int i=oddEvenLen; i<wordDim; i+=oddEvenLen)
-    {   
-        bitBlock <<= oddEvenLen;
-        maskOnWord |= bitBlock;
-    } 
+    int pow = 0;
 
-    return maskOnWord;
+    for(; pow<wordDim; pow++)
+    {
+        if(blockLen & 1)
+            break;
+
+        blockLen >>= 1;
+    }
+    return maskArr[pow];
 }
 
 void wordBitonicSort(WORD_TYPE* word, int wordDim)
@@ -163,3 +185,61 @@ void wordBitonicSort(WORD_TYPE* word, int wordDim)
         }
     }
 }
+
+void roseArr(WORD_TYPE* arr, ARR_LEN_TYPE arrLen, int wordDim, ARR_LEN_TYPE blockDim)
+{
+    if(blockDim <= WORD_LEN)
+    {
+        for(ARR_LEN_TYPE i = 0; i < arrLen; i++)
+            rose(&arr[i], wordDim, (int)blockDim);
+    }else
+    {                               // >>6 = /(64)*2
+        ARR_LEN_TYPE blockDimInWord = blockDim/wordDim;
+        ARR_LEN_TYPE halfDistance = blockDimInWord / 2;
+        for(ARR_LEN_TYPE k = 0; k < arrLen; k+=blockDimInWord)
+        {
+            for(ARR_LEN_TYPE i = 0; i < blockDimInWord/2; i++){
+                compareAndSwapWord(&arr[i+k], &arr[i+k+halfDistance]);
+            }
+        }
+
+    }
+}
+
+void brownArr(WORD_TYPE* arr, ARR_LEN_TYPE arrLen, int wordDim, ARR_LEN_TYPE blockDim)
+{
+    if(blockDim <= WORD_LEN)
+    {
+        for(ARR_LEN_TYPE i = 0; i < arrLen; i++)
+            brown(&arr[i], wordDim, (int)blockDim);
+    }else
+    {
+        ARR_LEN_TYPE blockDimInWord = blockDim/wordDim;
+
+        for(ARR_LEN_TYPE k = 0; k < arrLen; k += blockDimInWord)
+        {
+            for(ARR_LEN_TYPE i = 0, j; i < blockDimInWord/2; i++)
+            {
+                j = blockDimInWord - i - 1;
+                WORD_TYPE revertedTmp = wordReverse(arr[j+k], WORD_LEN);
+                compareAndSwapWord(&arr[i+k], &revertedTmp);
+                arr[j+k] = wordReverse(revertedTmp, WORD_LEN);
+            }
+        }    
+    }
+}
+
+void arrBitonicSort(WORD_TYPE* arr, ARR_LEN_TYPE arrLenInBit, int wordDim)
+{
+    ARR_LEN_TYPE arrLenInWord = arrLenInBit / wordDim;
+    for(ARR_LEN_TYPE i = 2; i <= arrLenInBit; i <<= 1)
+    {
+        brownArr(arr, arrLenInWord, wordDim, i);
+
+        for(ARR_LEN_TYPE j = i/2; j>=2; j>>=1)
+        {
+            roseArr(arr, arrLenInWord, wordDim, j);
+        }
+    }
+}
+
