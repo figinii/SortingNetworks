@@ -91,7 +91,7 @@ void bitonicSorterArr(WORD_TYPE* arr, ARR_LEN_TYPE arrLen, ARR_LEN_TYPE blockDim
     if(blockDim <= WORD_LEN)
     {
         for(ARR_LEN_TYPE i = 0; i < arrLen; i++)
-            bitonicSorter(&arr[i], WORD_LEN, (int)blockDim);
+            bitonicSorter(&arr[i], (int)blockDim);
     }else
     {                               // >>6 = /(64)*2
         ARR_LEN_TYPE blockDimInWord = blockDim/WORD_LEN;
@@ -111,7 +111,7 @@ void mergerArr(WORD_TYPE* arr, ARR_LEN_TYPE arrLen, ARR_LEN_TYPE blockDim)
     if(blockDim <= WORD_LEN)
     {
         for(ARR_LEN_TYPE i = 0; i < arrLen; i++)
-            merger(&arr[i], WORD_LEN, (int)blockDim);
+            merger(&arr[i], (int)blockDim);
     }else
     {
         ARR_LEN_TYPE blockDimInWord = blockDim/WORD_LEN;
@@ -134,11 +134,11 @@ void sort(WORD_TYPE* arr, ARR_LEN_TYPE arrLenInBit)
     ARR_LEN_TYPE arrLenInWord = arrLenInBit / WORD_LEN;
     for(ARR_LEN_TYPE i = 2; i <= arrLenInBit; i <<= 1)
     {
-        mergerArr(arr, arrLenInWord, WORD_LEN, i);
+        mergerArr(arr, arrLenInWord, i);
 
         for(ARR_LEN_TYPE j = i/2; j>=2; j>>=1)
         {
-            bitonicSorterArr(arr, arrLenInWord, WORD_LEN, j);
+            bitonicSorterArr(arr, arrLenInWord, j);
         }
     }
 }
