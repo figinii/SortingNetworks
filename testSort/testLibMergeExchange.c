@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include "../lib/mergExchange.h"
+#include "../lib/mergeExchange/mergExchange.h"
 #include "../utils/arrayUtils.h"
 #define Dlong int64_t
 
