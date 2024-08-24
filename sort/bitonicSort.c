@@ -4,6 +4,7 @@
 #define WORD_TYPE uint64_t
 #define ARR_LEN_TYPE long long 
 
+#define LOG2_64(x) ((sizeof(int64_t) * 8 - 1) - __builtin_clzll(x))
 #define ODD 0x5555555555555555
 #define PAIR 0x3333333333333333
 #define NIBBLE 0x0F0F0F0F0F0F0F0F
@@ -118,17 +119,8 @@ WORD_TYPE wordReverse(WORD_TYPE word, int stopAfter)
 //as input the power of 2 to use
 WORD_TYPE alternated01(int blockLen, int wordDim)
 {
-    int pow = 0;
     WORD_TYPE maskArray[] = MASK_ARRAY;
-
-    for(; pow<wordDim; pow++)
-    {
-        if(blockLen & 1)
-            break;
-
-        blockLen >>= 1;
-    }
-    return maskArray[pow];
+    return maskArray[LOG2_64(blockLen)];
 }
 
 void wordBitonicSort(WORD_TYPE* word, int wordDim)
