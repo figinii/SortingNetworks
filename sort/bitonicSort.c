@@ -1,19 +1,3 @@
-/*
-    da fare:
-    - iniziare con l'implementazione su 64 bit secchi... sulla single word
-    - generatore dei blocchi marroni e dei blocchi rosa in funzione della dimensione.
-
-    fare in modo che operi sui singoli bit; l'idea sarebbe quella di estrarre i bit utili 
-    dalla parola in due poi usate per operare sui bit d'interesse, analogo con quanto fatto 
-    con i confronti su bit pari e dispari
-
-    poi estendere a fare confronti tra 2 parole da 64 a quel punto scrivi mail a Barenghi
-    e chiedi se ha senso
-
-    marrone: (k, n-k-1)  k=0; k<=n/2; k++;
-    rosa: (k, k+n/2)  k=0; k<=n/2; k++; 
-*/
-
 #include <stdio.h>
 #include <stdint.h>
 #define WORD_LEN 64
@@ -26,11 +10,11 @@
 #define BYTE 0x00FF00FF00FF00FF
 #define SHORT 0x0000FFFF0000FFFF
 #define HALF_WORD 0x00000000FFFFFFFF
+#define MASK_ARRAY {ODD, PAIR, NIBBLE, BYTE, SHORT, HALF_WORD}
 
 void printBitsWord(WORD_TYPE num, int dim);
 
 WORD_TYPE wordReverse(WORD_TYPE word, int stopAfter);
-WORD_TYPE contiguosBit2power(int exp); /** può diventare una cache di (2^n)-1 con max n=64 */
 void compareAndSwapWord(WORD_TYPE* word1, WORD_TYPE* word2);
 
 WORD_TYPE alternated01(int blockLen, int wordDim);
@@ -45,29 +29,12 @@ void arrBitonicSort(WORD_TYPE* arr, ARR_LEN_TYPE arrLenInBit, int wordDim);
 
 int main()
 {
-    // WORD_TYPE num1 = 1245;
-    // WORD_TYPE num2 = 1345;
-
-    // printBitsWord(num1, WORD_LEN);
-    // printBitsWord(num2, WORD_LEN);
-
-    // compareAndSwapWord(&num1, &num2);
-    // printBitsWord(num1, WORD_LEN);
-    // printBitsWord(num2, WORD_LEN);
-
-    // compareAndSwapWord(&num1, &num2);
-
-    // printBitsWord(num1, WORD_LEN);
-    // printBitsWord(num2, WORD_LEN);
-    // printBitsWord(num1, WORD_LEN);
-    // printBitsWord(num2, WORD_LEN);
-
-    WORD_TYPE num3 = 38529352965235246;
+    WORD_TYPE num = 38529352965235246;
     ARR_LEN_TYPE arrLen = 16;
     WORD_TYPE arr[arrLen];
 
     for(int i=0; i<arrLen; i++)
-        arr[i] = num3;
+        arr[i] = num;
 
     for(int i=arrLen-1; i>=0; i--){
         printf("%X", arr[i]);
@@ -134,22 +101,15 @@ void rose(WORD_TYPE* num, int wordDim, int blockDim)
     *num = lowerMask | upperMask;   
 }
 
-//da eliminare - inutilizzata
-WORD_TYPE contiguosBit2power(int exp)
-{
-    return exp!=WORD_LEN? ((WORD_TYPE)1<<exp) -1 : -1;
-}
-
-//rendere array una define
 WORD_TYPE wordReverse(WORD_TYPE word, int stopAfter)
 {
-    WORD_TYPE maskArr[] = {ODD, PAIR, NIBBLE, BYTE, SHORT, HALF_WORD};
+    WORD_TYPE maskArray[] = MASK_ARRAY;
     WORD_TYPE result = word;
     int i = 1;
 
     for(int j = 0; i<stopAfter; i<<=1, j++)
     {
-        result = ((result >> i) & maskArr[j]) | ((result & maskArr[j]) << i);
+        result = ((result >> i) & maskArray[j]) | ((result & maskArray[j]) << i);
     }
 
     return result;
@@ -158,9 +118,8 @@ WORD_TYPE wordReverse(WORD_TYPE word, int stopAfter)
 //as input the power of 2 to use
 WORD_TYPE alternated01(int blockLen, int wordDim)
 {
-    WORD_TYPE maskArr[] = {ODD, PAIR, NIBBLE, BYTE, SHORT, HALF_WORD};
-
     int pow = 0;
+    WORD_TYPE maskArray[] = MASK_ARRAY;
 
     for(; pow<wordDim; pow++)
     {
@@ -169,7 +128,7 @@ WORD_TYPE alternated01(int blockLen, int wordDim)
 
         blockLen >>= 1;
     }
-    return maskArr[pow];
+    return maskArray[pow];
 }
 
 void wordBitonicSort(WORD_TYPE* word, int wordDim)
