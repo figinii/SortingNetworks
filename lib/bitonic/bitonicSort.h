@@ -133,7 +133,7 @@ void sort(WORD_TYPE* arr, ARR_LEN_TYPE arrLenInBit)
 {
     ARR_LEN_TYPE arrLenInWord = arrLenInBit / WORD_LEN;
     for(ARR_LEN_TYPE i = 2; i <= arrLenInBit; i <<= 1)
-    {
+    {   
         mergerArr(arr, arrLenInWord, i);
 
         for(ARR_LEN_TYPE j = i/2; j>=2; j>>=1)
