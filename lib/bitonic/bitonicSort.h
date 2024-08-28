@@ -2,7 +2,7 @@
 
 #define WORD_LEN 64
 #define WORD_TYPE uint64_t
-#define LOG2_64(x) ((WORD_LEN * 8 - 1) - __builtin_clzll(x))
+#define LOG2_64(x) ((sizeof(WORD_TYPE) * 8 - 1) - __builtin_clzll(x))
 
 #define ODD 0x5555555555555555
 #define PAIR 0x3333333333333333
