@@ -4,63 +4,74 @@
 #include <stdio.h>
 #include <time.h>
 
-uint64_t* generate_random_array(long long max_length, long long *size, bool randomSize);
+#define WORD_TYPE uint64_t 
+#define WORD_LEN (sizeof(uint64_t)*8)
+#define LENGHT_TYPE long long
 
-void printBitsWord(WORD_TYPE num, int dim)
+WORD_TYPE* generate_random_array(LENGHT_TYPE length);
+void printBitsWord(WORD_TYPE num)
 {
-    for(int i=WORD_LEN-1; i>=0; i--)
+    for(LENGHT_TYPE i=WORD_LEN-1; i>=0; i--)
     {
-        int tmp = (num>>i) &1;
+        LENGHT_TYPE tmp = (num>>i) &1;
         printf("%d", tmp);
     }
     printf("\n");
 }
-
 int main()
 {
-    long long length;
-	uint64_t* arr;
+    int singleWord;
+    LENGHT_TYPE length;
+	WORD_TYPE* arr;
 
-	printf("arr Length? ");
-  	scanf("%lld", &length);
+    printf("single word? (y/n)? ");
+    scanf(" %c", &singleWord);
+    
+    if(singleWord == 'y')
+        singleWord = 1;
+    else
+        singleWord = 0;
 
-	arr = generate_random_array(length, &length, false);
+    if(!singleWord)
+    {
+        while (getchar() != '\n');
+	    printf("arr Length? ");
+  	    scanf("%lld", &length);
+    }else
+    {
+        length = 1;
+    }
 
-    for(long i = 0; i < length; i++){
+	arr = generate_random_array(length);
+    
+    for(LENGHT_TYPE i = 0; i < length; i++){
         printf("%X", arr[i]);
     }
     printf("\n");
-
     sort(arr, length*WORD_LEN);
-  	
-    for(long i = length-1; i >= 0; i--)
+
+    for(LENGHT_TYPE i = length-1; i >= 0; i--)
     {
-        //printBitsWord(arr[i], 64);
-        printf("%X", arr[i]);
+        if(singleWord)
+            printBitsWord(arr[i]);
+        else
+            printf("%X", arr[i]);
     }
     printf("\n");
 
   	return 0;
 }
-
-uint64_t* generate_random_array(long long max_length, long long *size, bool randomSize)
+WORD_TYPE* generate_random_array(LENGHT_TYPE length)
 {
     srand(time(NULL));
     
-    if(randomSize){
-        *size = rand() % max_length;
-    }else{
-        *size = max_length;
-    }
-    
-    uint64_t *array = (uint64_t *)malloc(*size * sizeof(uint64_t));
+    WORD_TYPE *array = (WORD_TYPE *)malloc(length * sizeof(WORD_TYPE));
     if (array == NULL) {
         fprintf(stderr, "Memory asizellocation failed\n");
         exit(EXIT_FAILURE);
     }
     
-    // Populate the array with random values
-    for (long long i = 0; i < *size; i++) {
+    for (LENGHT_TYPE i = 0; i < length; i++) {
         array[i] = rand();
     }
     

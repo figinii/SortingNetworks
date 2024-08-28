@@ -1,7 +1,7 @@
 #include <stdint.h>
 
-#define WORD_LEN 64
 #define WORD_TYPE uint64_t
+#define WORD_LEN (sizeof(uint64_t)*8)
 #define LOG2_64(x) ((sizeof(WORD_TYPE) * 8 - 1) - __builtin_clzll(x))
 
 #define ODD 0x5555555555555555
@@ -21,6 +21,7 @@ WORD_TYPE alternated01(int blockLen);
 
 void merger(WORD_TYPE* num, int blockDim);
 void bitonicSorter(WORD_TYPE* num, int blockDim);
+void singleWordSort(WORD_TYPE* word);
 
 void mergerArr(WORD_TYPE* arr, ARR_LEN_TYPE arrLen, ARR_LEN_TYPE blockDim);
 void bitonicSorterArr(WORD_TYPE* arr, ARR_LEN_TYPE arrLen, ARR_LEN_TYPE blockDim);
@@ -64,6 +65,19 @@ void bitonicSorter(WORD_TYPE* num, int blockDim)
     upperMask <<= halfLen;
 
     *num = lowerMask | upperMask;   
+}
+
+void singleWordSort(WORD_TYPE* word)
+{
+    for(int i = 2; i <= WORD_LEN; i <<= 1)
+    {
+        merger(word, i);
+
+        for(int j = i/2; j>=2; j>>=1)
+        {
+            bitonicSorter(word, j);
+        }
+    }
 }
 
 WORD_TYPE wordReverse(WORD_TYPE word, int stopAfter)
@@ -132,6 +146,14 @@ void mergerArr(WORD_TYPE* arr, ARR_LEN_TYPE arrLen, ARR_LEN_TYPE blockDim)
 void sort(WORD_TYPE* arr, ARR_LEN_TYPE arrLenInBit)
 {
     ARR_LEN_TYPE arrLenInWord = arrLenInBit / WORD_LEN;
+
+    if(arrLenInWord == 1)
+    {
+        singleWordSort(&arr[0]);
+        return;
+    }
+
+
     for(ARR_LEN_TYPE i = 2; i <= arrLenInBit; i <<= 1)
     {   
         mergerArr(arr, arrLenInWord, i);
