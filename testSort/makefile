@@ -20,6 +20,4 @@ mkdir:
 	mkdir -p $(OUTDIR)
 
 clean:
-	rm -f $(OUT_SORT_TEST)
-	rm -f $(OUT_LIB_TEST)
-	rm -f $(OUT_BITONIC)
+	rm -f $(OUTDIR)*
