@@ -19,9 +19,9 @@ uint64_t sortingTimedTSCReg(WORD_TYPE* arr, ARR_LEN_TYPE arrLenInBit)
     unsigned int lo_start, hi_start, lo_end, hi_end;
     uint64_t start, end;
 
-    __asm__ volatile ("rdtsc" : "=a"(lo_start), "=d"(hi_start));
+    asm volatile ("rdtsc" : "=a"(lo_start), "=d"(hi_start));
     sort(arr, arrLenInBit);
-    __asm__ volatile ("rdtsc" : "=a"(lo_end), "=d"(hi_end));
+    asm volatile ("rdtsc" : "=a"(lo_end), "=d"(hi_end));
 
 
     start = ((uint64_t)hi_start <<32) | lo_start;
