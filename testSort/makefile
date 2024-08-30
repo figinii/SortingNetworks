@@ -1,9 +1,10 @@
-TARGETS = sort mergeEx bitonic
+TARGETS = sort mergeEx bitonic intrinsicBitonic
 
 OUTDIR = ./bin/
 OUT_SORT_TEST = $(OUTDIR)sort
 OUT_MERGEX_TEST = $(OUTDIR)mergeEx
 OUT_BITONIC = $(OUTDIR)bitonic
+OUT_BITONIC_INTR = $(OUTDIR)intrinsicBitonic
 
 all: $(TARGETS)
 
@@ -15,6 +16,9 @@ mergeEx: mkdir clean
 
 bitonic: mkdir clean
 	gcc testLibBitonic.c -o $(OUT_BITONIC)
+
+intrinsicBitonic: mkdir clean
+	gcc -g -mavx -mavx512f teslLibBitonicIntrinsic.c -o $(OUT_BITONIC_INTR)
 
 mkdir:
 	mkdir -p $(OUTDIR)
