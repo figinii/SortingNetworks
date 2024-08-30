@@ -1,7 +1,7 @@
 #include <stdint.h>
 
 #define WORD_TYPE uint64_t
-#define WORD_LEN (sizeof(uint64_t)*8)
+#define WORD_LEN (sizeof(WORD_TYPE)*8)
 #define LOG2_64(x) ((sizeof(WORD_TYPE) * 8 - 1) - __builtin_clzll(x))
 
 #define ODD 0x5555555555555555
