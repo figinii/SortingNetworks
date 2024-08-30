@@ -30,7 +30,6 @@ void sort(WORD_TYPE* arr, ARR_LEN_TYPE arrLenInBit);
 void compareAndSwapWord(WORD_TYPE* word1, WORD_TYPE* word2)
 {
     WORD_TYPE tmp = *word1 & *word2;
-    
     *word2 = *word1 | *word2;
     *word1 = tmp; 
 }

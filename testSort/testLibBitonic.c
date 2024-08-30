@@ -5,7 +5,7 @@
 #include <time.h>
 
 #define WORD_TYPE uint64_t 
-#define WORD_LEN (sizeof(uint64_t)*8)
+#define WORD_LEN (sizeof(WORD_TYPE)*8)
 #define LENGHT_TYPE long long
 
 WORD_TYPE* generate_random_array(LENGHT_TYPE length);
