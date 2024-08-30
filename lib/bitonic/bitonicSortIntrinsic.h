@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include <immintrin.h>
-#include <stdio.h>
 
 #define WORD_TYPE __m512i
 #define WORD_LEN (sizeof(WORD_TYPE)*8)
@@ -20,13 +19,6 @@
 #define MASK_ARRAY {ODD, PAIR, NIBBLE, BYTE, SHORT, HALF_WORD, WORD, DOUBLE_WORD, QUADRUPLE_WORD}
 
 #define ARR_LEN_TYPE long long 
-
-void print_array(__m512i num) {
-    for (int i = WORD_LEN/64 -1; i >= 0; i--) {
-        printf("%llX ", num[i]);
-    }
-    printf("\n");
-}
 
 WORD_TYPE wordReverse(WORD_TYPE word, int stopAfter);
 WORD_TYPE alternated01(int blockLen);
@@ -110,17 +102,12 @@ void bitonicSorter(WORD_TYPE* num, int blockDim)
 
 void singleWordSort(WORD_TYPE* word)
 {
-    print_array(*word);
     for(int i = 2; i <= WORD_LEN; i <<= 1)
     {
         merger(word, i);
-        printf("merger\n");
-        print_array(*word);
         for(int j = i/2; j>=2; j>>=1)
         {
             bitonicSorter(word, j);
-            printf("sorter\n");
-            print_array(*word);
         }
     }
 }
@@ -174,7 +161,6 @@ void sort(WORD_TYPE* arr, ARR_LEN_TYPE arrLenInBit)
 
     if(arrLenInWord == 1)
     {
-        printf("AAA\n");
         singleWordSort(&arr[0]);
         return;
     }
