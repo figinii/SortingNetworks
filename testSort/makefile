@@ -1,10 +1,12 @@
-TARGETS = sort mergeEx bitonic intrinsicBitonic
+TARGETS = sort mergeEx bitonic intrinsicBitonic intrinsicScrambler
 
 OUTDIR = ./bin/
 OUT_SORT_TEST = $(OUTDIR)sort
 OUT_MERGEX_TEST = $(OUTDIR)mergeEx
 OUT_BITONIC = $(OUTDIR)bitonic
 OUT_BITONIC_INTR = $(OUTDIR)intrinsicBitonic
+OUT_SCRAMBLE = $(OUTDIR)unsort
+
 
 all: $(TARGETS)
 
@@ -19,6 +21,9 @@ bitonic: mkdir clean
 
 intrinsicBitonic: mkdir clean
 	gcc -g -mavx -mavx512f teslLibBitonicIntrinsic.c -o $(OUT_BITONIC_INTR)
+
+intrinsicScrambler: mkdir clean
+	gcc -g -mavx -mavx512f testScramble.c -o $(OUT_SCRAMBLE)
 
 mkdir:
 	mkdir -p $(OUTDIR)
