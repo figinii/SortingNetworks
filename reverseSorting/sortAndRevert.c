@@ -16,7 +16,7 @@ int main()
 	int32* arr;
 	int32* originalArr;
 
-	printf("max arr Length? ");
+	printf("arr Length? ");
   	scanf("%lld", &length);
 
 	arr = generate_random_array(length, &length, false);

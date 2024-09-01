@@ -1,4 +1,4 @@
-#include "../lib/bitonic/bitonicCmpAndScrambler.h"
+#include "../lib/bitonic/bitonicCmpParam.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>

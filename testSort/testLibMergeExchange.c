@@ -10,10 +10,11 @@ int main()
   	char c;
 	int32* arr;
 
-	printf("max arr Length? ");
+	printf("arr Length? ");
   	scanf("%lld", &length);
 
 	arr = generate_random_array(length, &length, false);
+	printArray(arr, length);
   	mergExchange(arr, length);
   	printArray(arr, length);
 
