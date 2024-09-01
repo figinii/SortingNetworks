@@ -82,7 +82,7 @@ WORD_TYPE* generate_random_array(LENGHT_TYPE length)
 WORD_TYPE random_num()
 {
     srand(time(NULL));
-    return _mm512_set_epi64(1, 0, 0, 0, 0, 0, 0, 0);
+    return _mm512_set_epi64(rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand());
 }
 
 void _mm512_print(__m512i num) {
