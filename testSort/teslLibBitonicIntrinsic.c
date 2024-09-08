@@ -23,6 +23,8 @@ int main()
     printf("single word? (y/n)? ");
     scanf(" %c", &singleWord);
     
+    srand(time(NULL));
+
     if(singleWord == 'y')
         singleWord = 1;
     else
@@ -73,7 +75,6 @@ WORD_TYPE* generate_random_array(LENGHT_TYPE length)
 
 WORD_TYPE random_num()
 {
-    srand(time(NULL));
     return _mm512_set_epi64(rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand());
 }
 
