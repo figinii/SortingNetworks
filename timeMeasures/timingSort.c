@@ -5,7 +5,7 @@
 #include <time.h>
 #include <errno.h>
 
-#define MAX_LEN_IN_WORD 2056 
+#define MAX_LEN_IN_WORD 64 
 
 #define WORD_TYPE uint64_t 
 #define LENGHT_TYPE long long
@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
 {
 	WORD_TYPE* arr;
     uint64_t cycles, time;
-    int sampleSize = 500;
+    int sampleSize = 1000;
     FILE *results;
 
     if(argc < REQUIRED_PARAM || argc > REQUIRED_PARAM + OPTIONS)
@@ -43,14 +43,14 @@ int main(int argc, char* argv[])
 
     fprintf(results, "sampleLen,cycles,time\n");
 
-    for(LENGHT_TYPE length = 1; length < MAX_LEN_IN_WORD; length <<= 1)
+    for(LENGHT_TYPE length = 8; length < MAX_LEN_IN_WORD; length <<= 1)
     {
         arr = generate_random_array(length);
         for(int j = 0; j < sampleSize; j++)
         {
             time = sortingTimedGetTime(arr, length*WORD_LEN);
             cycles = sortingTimedTSCReg(arr, length*WORD_LEN);
-            fprintf(results, "%lld,%llu,%llu\n", length, cycles, time);
+            fprintf(results, "%lld,%llu,%llu\n", length*64, cycles, time);
         }
     }
 
