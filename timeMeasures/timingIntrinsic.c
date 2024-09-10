@@ -43,7 +43,7 @@ int main()
     {
         a = sortingTimedGetTime(arr, length*WORD_LEN);
         b = sortingTimedTSCReg(arr, length*WORD_LEN);
-        // printf("%d, %d, %d\n", length*512, a, b);
+        printf("%d, %d, %d\n", length*512, a, b);
     }
 
     for(LENGHT_TYPE i = length-1; i >= 0; i--)
