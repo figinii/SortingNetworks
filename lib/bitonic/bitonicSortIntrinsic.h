@@ -3,8 +3,8 @@
 
 #define WORD_TYPE __m512i
 #define WORD_LEN (sizeof(WORD_TYPE)*8)
-#define LOG2(x) ((64 - 1) - __builtin_clzll(x))
 #define COMPONENTS_DIM 64
+#define LOG2(x) ((COMPONENTS_DIM - 1) - __builtin_clzll(x))
 
 #define ODD _mm512_set1_epi64(0x5555555555555555)
 #define PAIR _mm512_set1_epi64(0x3333333333333333)
@@ -223,34 +223,26 @@ WORD_TYPE _mm512_lShift(__m512i reg, unsigned int shift)
 
 __m512i _mm512_lWordShift(__m512i reg, unsigned int shift)
 {       
-    return _mm512_set_epi64(
-        componentL(reg, shift, 7), componentL(reg, shift, 6),
-        componentL(reg, shift, 5), componentL(reg, shift, 4),
-        componentL(reg, shift, 3), componentL(reg, shift, 2),
-        componentL(reg, shift, 1), componentL(reg, shift, 0));
+    for(int i = 7 - shift; i >= 0 ; i--)
+    {
+        reg[i + shift] = reg[i];
+    }
+    for(int i = 0; i < shift; i++)
+    {
+        reg[i] = 0;
+    }
+    return reg;
 }
 
 __m512i _mm512_rWordShift(__m512i reg, unsigned int shift)
 {       
-    return _mm512_set_epi64(
-        componentR(reg, shift, 7), componentR(reg, shift, 6),
-        componentR(reg, shift, 5), componentR(reg, shift, 4),
-        componentR(reg, shift, 3), componentR(reg, shift, 2),
-        componentR(reg, shift, 1), componentR(reg, shift, 0));
-}
-
-uint64_t componentL(__m512i reg, unsigned int shift, int index)
-{
-    int indexShift = index - shift;
-    if(indexShift < 0)
-        return 0;
-    return reg[indexShift];
-}
-
-uint64_t componentR(__m512i reg, unsigned int shift, int index)
-{
-    int indexShift = index + shift;
-    if(indexShift > 7)
-        return 0;
-    return reg[indexShift];
+    for(int i = shift; i <= 7; i++)
+    {
+        reg[i-shift] = reg[i];
+    }
+    for(int i = 7; i > 7-shift; i--)
+    {
+        reg[i] = 0;
+    }
+    return reg;
 }

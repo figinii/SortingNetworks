@@ -1,4 +1,4 @@
-TARGETS = sort mergeEx bitonic intrinsicBitonic intrinsicScrambler
+TARGETS = sort mergeEx bitonic intrinsicBitonic intrinsicScrambler avx
 
 OUTDIR = ./bin/
 OUT_SORT_TEST = $(OUTDIR)sort
@@ -6,7 +6,7 @@ OUT_MERGEX_TEST = $(OUTDIR)mergeEx
 OUT_BITONIC = $(OUTDIR)bitonic
 OUT_BITONIC_INTR = $(OUTDIR)intrinsicBitonic
 OUT_SCRAMBLE = $(OUTDIR)unsort
-
+OUT_AVX = $(OUTDIR)avx
 
 all: $(TARGETS)
 
@@ -24,6 +24,9 @@ intrinsicBitonic: mkdir clean
 
 intrinsicScrambler: mkdir clean
 	gcc -g -mavx -mavx512f testScramble.c -o $(OUT_SCRAMBLE)
+
+avx: mkdir clean
+	gcc -g -mavx -mavx512bw -mavx512f testLibAVX.c -o $(OUT_AVX)
 
 mkdir:
 	mkdir -p $(OUTDIR)
