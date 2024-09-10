@@ -1,3 +1,4 @@
 # SortingNetworks
 
-"pure" implementation in ./lib/
+### teoria: ../report/report - teoria.md
+### implementazione: ../report/report - implementazioni.md
