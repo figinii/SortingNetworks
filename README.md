@@ -1,4 +1,4 @@
 # SortingNetworks
 
-### teoria: ../report/report - teoria.md
-### implementazione: ../report/report - implementazioni.md
+### teoria: [[../report/report - teoria.md]]
+### implementazione: [[../report/report - implementazioni.md]]
