@@ -12,7 +12,7 @@ In particolare questo tipo di attacchi non mira a testare la robustezza matemati
 
 Un esempio concreto può essere il risalire alle informazioni contenute all'interno di una smartCard tramite il monitoraggio del consumo energetico del relativo lettore.
 
-![[smartCardReader.png]]
+![[smartCardReader.png]](https://github.com/figinii/SortingNetworks/blob/main/report/reportAssets/smartCardReader.png)
 
 Osservando che la lettura di un 1 consuma il doppio dell'energia rispetto alla lettura di uno 0 diventa quindi immediato risalire all'informazione originale contenuta nella smart card; questo a prescindere dall'algoritmo utilizzato per la trasmissione dei dati durante la lettura ed indipendentemente dalla sua robustezza.
 # time channel
