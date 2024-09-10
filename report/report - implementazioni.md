@@ -12,10 +12,10 @@ le misurazioni sono state effettuate usando il TSC, con una sample size di 1000 
 
 In verde il Batcher Merge Exchange senza parallelismo, in blu il bitonic sort e in arancione il bitonic sort ottimizzato usando intrinsic.
 
-![](../reportAssets/intrinsicVsNoVsMerge.png)
+![../reportAssets/intrinsicVsNoVsMerge.png](https://github.com/figinii/SortingNetworks/blob/main/report/reportAssets/intrinsicVsNoVsMerge.png)
 
 Come ci si poteva aspettare la l'uso del parallelismo ha un impatto notevole sulla velocità d'esecuzione. Divario che aumenta notevolmente al crescere della dimensione dell'input.
 
-![[intrinsicVsNo.png]]
+![intrinsicVsNo.png](https://github.com/figinii/SortingNetworks/blob/main/report/reportAssets/intrinsicVsNo.png)
 
 Da questo secondo tracciato invece si può notare la differenza nei tempi d'esecuzione data dall'implementazione usando intrinsic. Anche in questo caso il divario tende a crescere all'aumentare del numero di elementi.
