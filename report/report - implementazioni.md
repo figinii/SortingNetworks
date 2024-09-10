@@ -10,7 +10,7 @@
 
 le misurazioni sono state effettuate usando il TSC, con una sample size di 1000 per ogni dimensione. Di seguito riportati i grafici delle medie a confronto.
 
-In verde il Batcher Merge Exchange senza parallelismo, in blu il bitonic sort e in arancione il bitonic sort ottimizzato usando intrinsic.
+In verde il Batcher Merge Exchange senza parallelismo, in blu il bitonic sort che sfrutta parallelismo e in arancione il bitonic sort ottimizzato usando intrinsic.
 
 ![../reportAssets/intrinsicVsNoVsMerge.png](https://github.com/figinii/SortingNetworks/blob/main/report/reportAssets/intrinsicVsNoVsMerge.png)
 
