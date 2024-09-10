@@ -36,8 +36,6 @@ __m512i _mm512_lShift(__m512i reg, unsigned int shift);
 __m512i _mm512_rShift(__m512i reg, unsigned int shift);
 __m512i _mm512_lWordShift(__m512i reg, unsigned int shift);
 __m512i _mm512_rWordShift(__m512i reg, unsigned int shift);
-uint64_t componentL(__m512i reg, unsigned int shift, int index);
-uint64_t componentR(__m512i reg, unsigned int shift, int index);
 
 void compareAndSwapWord(WORD_TYPE* word1, WORD_TYPE* word2)
 {

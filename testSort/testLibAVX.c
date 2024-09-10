@@ -1,49 +1,83 @@
-#include <immintrin.h>
+#include "../lib/bitonic/bitonicAVX2.h"
+#include <stdbool.h>
+#include <stdlib.h>
 #include <stdio.h>
-#include <stdint.h>
+#include <time.h>
 
-#define COMPONENTS_DIM 64
-#define WORD_TYPE __m512i
+#define LENGHT_TYPE long long
 
-void _mm512_print(__m512i num);
-__m512i _mm512_rWordShift(__m512i reg, unsigned int shift);
-uint64_t componentR(__m512i reg, unsigned int shift, int index);
+WORD_TYPE* generate_random_array(LENGHT_TYPE length);
+WORD_TYPE random_num();
+void _mm256_print(__m256i num);
+
 
 int main()
 {
-    __m512i a = _mm512_set_epi64(0, 0xFFFFFFFFFFFFFFFF, 0, 0xFFFFFFFFFFFFFFFF,0, 0xFFFFFFFFFFFFFFFF, 0, 0xFFFFFFFFFFFFFFFF);
-    _mm512_print(a);
-    a = _mm512_rWordShift(a, 2);
-    _mm512_print(a);
+    int singleWord;
+    LENGHT_TYPE length;
+	WORD_TYPE* arr;
 
-    return 0;
+    printf("single word? (y/n)? ");
+    scanf(" %c", &singleWord);
+    
+    srand(time(NULL));
+
+    if(singleWord == 'y')
+        singleWord = 1;
+    else
+        singleWord = 0;
+
+    if(!singleWord)
+    {
+        while (getchar() != '\n');
+	    printf("arr Length? ");
+  	    scanf("%lld", &length);
+    }else
+    {
+        length = 1;
+    }
+
+	arr = generate_random_array(length);
+    
+    for(LENGHT_TYPE i = 0; i < length; i++){
+        _mm256_print(arr[i]);
+    }
+    printf("\n");
+    
+    sort(arr, length*WORD_LEN);
+
+    for(LENGHT_TYPE i = length-1; i >= 0; i--)
+    {
+        _mm256_print(arr[i]);
+    }
+    printf("\n");
+
+  	return 0;
 }
 
-void _mm512_print(__m512i num)
+WORD_TYPE* generate_random_array(LENGHT_TYPE length)
+{    
+    WORD_TYPE *array = (WORD_TYPE *)malloc(length * sizeof(WORD_TYPE));
+    if (array == NULL) {
+        fprintf(stderr, "Memory asizellocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    for (LENGHT_TYPE i = 0; i < length; i++) {
+        array[i] = random_num();
+    }
+    
+    return array;
+}
+
+WORD_TYPE random_num()
 {
-    for (int i = 512/64 -1; i >= 0; i--) {
+    return _mm256_set_epi64x(rand(), rand(), rand(), rand());
+}
+
+void _mm256_print(__m256i num) {
+    for (int i = WORD_LEN/64 -1; i >= 0; i--) {
         printf("%llX ", num[i]);
     }
     printf("\n");
-}
-
-__m512i _mm512_rWordShift(__m512i reg, unsigned int shift)
-{       
-    for(int i = shift; i <= 7; i++)
-    {
-        reg[i-shift] = reg[i];
-    }
-    for(int i = 7; i > 7-shift; i--)
-    {
-        reg[i] = 0;
-    }
-    return reg;
-}
-
-uint64_t componentR(__m512i reg, unsigned int shift, int index)
-{
-    int indexShift = index + shift;
-    if(indexShift > 7)
-        return 0;
-    return reg[indexShift];
 }
